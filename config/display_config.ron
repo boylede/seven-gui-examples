@@ -1,0 +1,4 @@
+(
+  title: "GUI window",
+  dimensions: Some((300, 300)),
+)

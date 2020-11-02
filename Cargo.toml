@@ -1,0 +1,9 @@
+[package]
+name = "seven-gui-amethyst"
+version = "0.1.0"
+authors = ["Daniel Boyle <boylede+github@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+amethyst = {version = "0.15.3", features = ["vulkan"]}
+log = { version = "0.4.8", features = ["serde"] }
