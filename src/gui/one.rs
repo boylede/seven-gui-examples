@@ -12,7 +12,7 @@ use amethyst::{
         RenderingBundle,
     },
     ui::{
-        Anchor, RenderUi, UiBundle, UiLabelBuilder, UiLabel, UiButton, UiButtonBuilder, UiEvent, UiEventType, UiFinder, UiImage, UiText, Widgets, UiCreator,
+        RenderUi, UiBundle, UiEvent, UiEventType, UiFinder, UiText, UiCreator,
     },
     utils::{
         application_root_dir,
@@ -31,50 +31,12 @@ struct Example {
     quantity: u32,
 }
 
-type Labels = Widgets::<UiLabel, String>;
-type Buttons = Widgets::<UiButton, String>;
-
 impl SimpleState for Example {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let StateData { mut world, .. } = data;
 
-        let (_button_id, _label) =
-            UiButtonBuilder::<(), String>::new("Increment".to_string())
-                .with_id("button".to_string())
-                .with_font_size(32.0)
-                .with_position(0.0, 0.0)
-                .with_size(64.0 * 6.0, 64.0)
-                .with_anchor(Anchor::MiddleLeft)
-                .with_image(UiImage::SolidColor([0.8, 0.6, 0.3, 1.0]))
-                .with_hover_image(UiImage::SolidColor([0.1, 0.1, 0.1, 0.5]))
-                .build_from_world(&world);
-        // let (_button_id, _label) =
-        //     UiButtonBuilder::<(), String>::new("Increment".to_string())
-        //         .with_id("button".to_string())
-        //         .with_font_size(32.0)
-        //         .with_position(0.0, 0.0)
-        //         .with_size(64.0 * 6.0, 64.0)
-        //         .with_anchor(Anchor::MiddleLeft)
-        //         .with_image(UiImage::SolidColor([0.8, 0.6, 0.3, 1.0]))
-        //         .with_hover_image(UiImage::SolidColor([0.1, 0.1, 0.1, 0.5]))
-        //         .build_from_world(&world);
-
-
         init_output(&mut world);
-        let (_i, _l) = UiLabelBuilder::<String>::new("0".to_string())
-                .with_id("counter".to_string())
-                .with_font_size(32.0)
-                .with_position(0.0, 0.0)
-                .with_size(64.0 * 6.0, 64.0)
-                .with_anchor(Anchor::MiddleLeft)
-                .build_from_world(&world);
-        // let (_i, _l) = UiLabelBuilder::<String>::new("0".to_string())
-        //         .with_id("counter".to_string())
-        //         .with_font_size(32.0)
-        //         .with_position(0.0, 0.0)
-        //         .with_size(64.0 * 6.0, 64.0)
-        //         .with_anchor(Anchor::MiddleLeft)
-        //         .build_from_world(&world);
+
         world.exec(|mut creator: UiCreator<'_>| {
             creator.create("one/counter.ron", ());
         });
