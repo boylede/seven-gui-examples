@@ -44,9 +44,9 @@ impl SimpleState for Example {
             UiButtonBuilder::<(), String>::new("Increment".to_string())
                 .with_id("button".to_string())
                 .with_font_size(32.0)
-                .with_position(0.0, -256.0)
+                .with_position(0.0, 0.0)
                 .with_size(64.0 * 6.0, 64.0)
-                .with_anchor(Anchor::TopMiddle)
+                .with_anchor(Anchor::MiddleLeft)
                 .with_image(UiImage::SolidColor([0.8, 0.6, 0.3, 1.0]))
                 .with_hover_image(UiImage::SolidColor([0.1, 0.1, 0.1, 0.5]))
                 .build_from_world(&world);
@@ -56,9 +56,9 @@ impl SimpleState for Example {
         let (_i, _l) = UiLabelBuilder::<String>::new("0".to_string())
                 .with_id("counter".to_string())
                 .with_font_size(32.0)
-                .with_position(0.0, -300.0)
+                .with_position(0.0, 0.0)
                 .with_size(64.0 * 6.0, 64.0)
-                .with_anchor(Anchor::TopMiddle)
+                .with_anchor(Anchor::MiddleLeft)
                 .build_from_world(&world);
     }
 
