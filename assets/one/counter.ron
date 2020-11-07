@@ -1,0 +1,73 @@
+#![enable(implicit_some)]
+Container(
+    transform: (
+        id: "background",
+        anchor: Middle,
+        stretch: XY( x_margin: 0., y_margin: 0., keep_aspect_ratio: false),
+        width: 20.,
+        height: 20.,
+    ),
+    background: SolidColor(0.9, 0.9, 0.9, 1.0),
+    children: [
+        Button(
+            transform: (
+                id: "button",
+                x: 105.,
+                y: 0.,
+                width: 170.,
+                height: 110.,
+                tab_order: 0,
+                anchor: MiddleLeft,
+                mouse_reactive: true,
+            ),
+            button: (
+                text: "Increment",
+                font: File("square.ttf", ("TTF", ())),
+                font_size: 25.,
+                normal_text_color: (0.2, 0.2, 0.2, 1.0),
+                hover_text_color: (0.2, 0.2, 0.2, 1.0),
+                press_text_color: (0.2, 0.2, 0.2, 1.0),
+                normal_image: SolidColor(0.8, 0.8, 0.8, 1.),
+                hover_image: SolidColor(0.7, 0.7, 0.7, 1.),
+                press_image: SolidColor(0.6, 0.6, 0.6, 1.),
+                // hover_sound: File("audio/boop.ogg", ("OGG", ())),
+                // press_sound: File("audio/confirm.ogg", ("OGG", ())),
+            )
+        ),
+        Container(
+            transform: (
+                id: "label_bg",
+                anchor: MiddleRight,
+                // 
+                x: -55.,
+                y: 0.,
+                width: 70.,
+                height: 110.,
+            ),
+            background: SolidColor(0.8, 0.8, 0.8, 1.0),
+            children: [
+                Label(
+                    transform: (
+                        id: "counter",
+                        // x: -55.,
+                        // y: 0.,
+                        stretch: XY( x_margin: 0., y_margin: 0., keep_aspect_ratio: false),
+                        width: 1.,
+                        height: 1.,
+                        tab_order: 1,
+                        anchor: Middle,
+                        // opaque: false,
+                    ),
+                    text: (
+                        text: "0",
+                        font: File("square.ttf", ("TTF", ())),
+                        font_size: 25.,
+                        color: (0.2, 0.2, 0.2, 1.0),
+                    )
+                ),
+
+            ],
+        )
+        
+    ],
+)

@@ -1,0 +1,10 @@
+#![enable(implicit_some)]
+(
+  title: "GUI One: Counter",
+  dimensions: (300, 150),
+  min_dimensions: (300, 150),
+  max_dimensions: (300, 150),
+  resizable: false,
+//   decorations: false,
+//   transparent: true,
+)

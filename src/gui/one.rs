@@ -12,7 +12,7 @@ use amethyst::{
         RenderingBundle,
     },
     ui::{
-        Anchor, RenderUi, UiBundle, UiLabelBuilder, UiLabel, UiButton, UiButtonBuilder, UiEvent, UiEventType, UiFinder, UiImage, UiText, Widgets,
+        Anchor, RenderUi, UiBundle, UiLabelBuilder, UiLabel, UiButton, UiButtonBuilder, UiEvent, UiEventType, UiFinder, UiImage, UiText, Widgets, UiCreator,
     },
     utils::{
         application_root_dir,
@@ -37,8 +37,6 @@ type Buttons = Widgets::<UiButton, String>;
 impl SimpleState for Example {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let StateData { mut world, .. } = data;
-        world.insert(Labels::default());
-        world.insert(Buttons::default());
 
         let (_button_id, _label) =
             UiButtonBuilder::<(), String>::new("Increment".to_string())
@@ -50,6 +48,16 @@ impl SimpleState for Example {
                 .with_image(UiImage::SolidColor([0.8, 0.6, 0.3, 1.0]))
                 .with_hover_image(UiImage::SolidColor([0.1, 0.1, 0.1, 0.5]))
                 .build_from_world(&world);
+        // let (_button_id, _label) =
+        //     UiButtonBuilder::<(), String>::new("Increment".to_string())
+        //         .with_id("button".to_string())
+        //         .with_font_size(32.0)
+        //         .with_position(0.0, 0.0)
+        //         .with_size(64.0 * 6.0, 64.0)
+        //         .with_anchor(Anchor::MiddleLeft)
+        //         .with_image(UiImage::SolidColor([0.8, 0.6, 0.3, 1.0]))
+        //         .with_hover_image(UiImage::SolidColor([0.1, 0.1, 0.1, 0.5]))
+        //         .build_from_world(&world);
 
 
         init_output(&mut world);
@@ -60,6 +68,16 @@ impl SimpleState for Example {
                 .with_size(64.0 * 6.0, 64.0)
                 .with_anchor(Anchor::MiddleLeft)
                 .build_from_world(&world);
+        // let (_i, _l) = UiLabelBuilder::<String>::new("0".to_string())
+        //         .with_id("counter".to_string())
+        //         .with_font_size(32.0)
+        //         .with_position(0.0, 0.0)
+        //         .with_size(64.0 * 6.0, 64.0)
+        //         .with_anchor(Anchor::MiddleLeft)
+        //         .build_from_world(&world);
+        world.exec(|mut creator: UiCreator<'_>| {
+            creator.create("one/counter.ron", ());
+        });
     }
 
     fn handle_event(
@@ -101,14 +119,14 @@ impl SimpleState for Example {
         let StateData { world, .. } = state_data;
         if self.counter.is_none() {
             world.exec(|finder: UiFinder| {
-                if let Some(entity) = finder.find("counter_label") {
+                if let Some(entity) = finder.find("counter") {
                     self.counter = Some(entity);
                 }
             });
         }
         if self.button.is_none() {
             world.exec(|finder: UiFinder| {
-                if let Some(entity) = finder.find("button_btn") {
+                if let Some(entity) = finder.find("button") {
                     self.button = Some(entity);
                 }
             });
@@ -117,13 +135,14 @@ impl SimpleState for Example {
     }
 }
 
-fn main() -> amethyst::Result<()> {
+pub fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
 
     let app_root = application_root_dir()?;
 
-    let display_config_path = app_root.join("config/display_config.ron");
+    
     let assets_dir = app_root.join("assets");
+    let display_config_path = assets_dir.join("one/display.ron");
 
     let game_data = GameDataBuilder::default()
         .with_system_desc(PrefabLoaderSystemDesc::<MyPrefabData>::default(), "", &[])
@@ -136,7 +155,7 @@ fn main() -> amethyst::Result<()> {
             RenderingBundle::<DefaultBackend>::new()
                 .with_plugin(
                     RenderToWindow::from_config_path(display_config_path)?
-                        .with_clear([0.34, 0.36, 0.52, 1.0]),
+                        .with_clear([0.1, 0.1, 0.1, 0.0]),
                 )
                 .with_plugin(RenderUi::default()),
         )?;
