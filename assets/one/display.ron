@@ -2,9 +2,11 @@
 (
   title: "GUI One: Counter",
   dimensions: (300, 150),
-  min_dimensions: (300, 150),
-  max_dimensions: (300, 150),
-  resizable: false,
-//   decorations: false,
-//   transparent: true,
+  // min_dimensions: (300, 150),
+  // max_dimensions: (300, 150),
+  // resizable: true,
+  // decorations: false,
+  // transparent: true,
+  // always_on_top: true,
+  // visibility: true,
 )

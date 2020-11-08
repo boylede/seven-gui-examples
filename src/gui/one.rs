@@ -2,9 +2,10 @@ use amethyst::{
     assets::{PrefabLoaderSystemDesc, Processor},
     audio::{output::init_output, Source},
     core::{ transform::TransformBundle},
-    ecs::prelude::{Entity, WorldExt},
+    ecs::prelude::{Entity, WorldExt, WriteExpect, Component, WriteStorage},
     input::{is_close_requested, is_key_down, InputBundle, StringBindings},
     prelude::*,
+    
     renderer::{
         plugins::RenderToWindow,
         rendy::mesh::{Normal, Position, TexCoord},
@@ -12,22 +13,23 @@ use amethyst::{
         RenderingBundle,
     },
     ui::{
-        RenderUi, UiBundle, UiEvent, UiEventType, UiFinder, UiText, UiCreator,
+        RenderUi, UiBundle, UiEvent, UiEventType, UiFinder, UiText, UiCreator, Draggable,
     },
     utils::{
         application_root_dir,
         fps_counter::{FpsCounterBundle},
         scene::BasicScenePrefab,
     },
-    winit::VirtualKeyCode,
+    winit::{VirtualKeyCode, Window},
 };
 
-type MyPrefabData = BasicScenePrefab<(Vec<Position>, Vec<Normal>, Vec<TexCoord>)>;
+use log::info;
 
 #[derive(Default)]
 struct Example {
     counter: Option<Entity>,
     button: Option<Entity>,
+    decoration: Option<Entity>,
     quantity: u32,
 }
 
@@ -36,6 +38,11 @@ impl SimpleState for Example {
         let StateData { mut world, .. } = data;
 
         init_output(&mut world);
+
+        // {
+        //     let win = world.try_fetch_mut::<Window>().unwrap();
+        //     (*win).set_decorations(false);
+        // }
 
         world.exec(|mut creator: UiCreator<'_>| {
             creator.create("one/counter.ron", ());
@@ -56,6 +63,11 @@ impl SimpleState for Example {
                 }
             }
             StateEvent::Ui(ui_event) => {
+                if let Some(t) = self.decoration {
+                    if ui_event.target == t {
+                        info!("something happened! {:?}", ui_event);
+                    }
+                }
                 if let UiEvent{event_type: UiEventType::ClickStop, target, ..} = ui_event {
                     if let Some(b) = self.button {
                         if b == *target {
@@ -93,12 +105,33 @@ impl SimpleState for Example {
                 }
             });
         }
+        if self.decoration.is_none() {
+            world.exec(|(finder, mut draggables): (UiFinder, WriteStorage<Draggable>)| {
+                if let Some(entity) = finder.find("resize") {
+                    // let my = world.write_resource::<Draggable>();
+                    draggables.insert(entity, Draggable).expect("failed to make draggable");
+                    self.decoration = Some(entity);
+
+                }
+            });
+        }
         Trans::None
     }
 }
 
 pub fn main() -> amethyst::Result<()> {
+
     amethyst::start_logger(Default::default());
+
+
+    // {
+    //     use amethyst_rendy::palette::Srgba;
+
+    //     let (r, g, b, a) = Srgba::new(0.118, 0.655, 0.882, 1.0)
+    //         .into_linear()
+    //         .into_components();
+    //     info!("{}, {}, {}", r, g, b);
+    // }
 
     let app_root = application_root_dir()?;
 
@@ -107,7 +140,7 @@ pub fn main() -> amethyst::Result<()> {
     let display_config_path = assets_dir.join("one/display.ron");
 
     let game_data = GameDataBuilder::default()
-        .with_system_desc(PrefabLoaderSystemDesc::<MyPrefabData>::default(), "", &[])
+        // .with_system_desc(PrefabLoaderSystemDesc::<MyPrefabData>::default(), "", &[])
         .with_bundle(TransformBundle::new())?
         .with_bundle(InputBundle::<StringBindings>::new())?
         .with_bundle(UiBundle::<StringBindings>::new())?

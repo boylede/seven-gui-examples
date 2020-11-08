@@ -1,10 +1,10 @@
 #![enable(implicit_some)]
 (
   title: "GUI Two: Temperature",
-  dimensions: (460, 100),
-  min_dimensions: (460, 100),
-  max_dimensions: (460, 100),
-  resizable: false,
+  dimensions: (490, 100),
+  // min_dimensions: (460, 100),
+  // max_dimensions: (460, 100),
+  // resizable: false,
 //   decorations: false,
 //   transparent: true,
 )
