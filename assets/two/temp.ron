@@ -1,0 +1,128 @@
+#![enable(implicit_some)]
+Container(
+    transform: (
+        id: "background",
+        anchor: Middle,
+        stretch: XY( x_margin: 0., y_margin: 0., keep_aspect_ratio: false),
+        width: 460.,
+        height: 100.,
+    ),
+    background: SolidColor(0.9, 0.9, 0.9, 1.0),
+    children: [
+         Container(
+            transform: (
+                id: "fahrenheit_container",
+                x: 115.,
+                y: 0.,
+                width: 230.,
+                height: 100.,
+                tab_order: 1,
+                anchor: MiddleLeft,
+            ),
+            background: SolidColor(0.8, 0.8, 0.8, 1.0),
+            children: [
+                Label(
+                    transform: (
+                        id: "fahrenheit",
+                        width: 1.,
+                        height: 1.,
+                        tab_order: 1,
+                        anchor: Middle,
+                        stretch: XY(x_margin: 20., y_margin: 0., keep_aspect_ratio: false),
+                        mouse_reactive: true,
+                        selectable: 0,
+                    ),
+                    text: (
+                        text: "0",
+                        font: File("square.ttf", ("TTF", ())),
+                        font_size: 50.,
+                        color: (0.1, 0.1, 0.1, 1.0),
+                        align: MiddleLeft,
+                        editable: (
+                            max_length: 4,
+                            selected_text_color: (0.1, 0.1, 0.1, 1.0),
+                            selected_background_color: (0.9, 0.9, 0.9, 1.0),
+                        ),
+                    )
+                ),
+                Label(
+                    transform: (
+                        id: "fahrenheit_label",
+                        x: -57.,
+                        y: 0.,
+                        // stretch: XY( x_margin: 0., y_margin: 0., keep_aspect_ratio: false),
+                        width: 115.,
+                        height: 60.,
+                        tab_order: 1,
+                        anchor: MiddleRight,
+                        // opaque: false,
+                    ),
+                    text: (
+                        text: "fahrenheit",
+                        font: File("square.ttf", ("TTF", ())),
+                        font_size: 16.,
+                        color: (0.1, 0.1, 0.1, 1.0),
+                    )
+                ),
+            ]
+        ),
+        Container(
+            transform: (
+                id: "celsius_container",
+                x: -115.,
+                y: 0.,
+                width: 230.,
+                height: 100.,
+                tab_order: 1,
+                anchor: MiddleRight,
+            ),
+            background: SolidColor(0.2, 0.2, 0.2, 1.0),
+            children: [
+                Label(
+                    transform: (
+                        id: "celsius",
+                        width: 1.,
+                        height: 1.,
+                        tab_order: 1,
+                        anchor: Middle,
+                        stretch: XY(x_margin: 20., y_margin: 0., keep_aspect_ratio: false),
+                        mouse_reactive: true,
+                        selectable: 0,
+                    ),
+                    text: (
+                        text: "0",
+                        font: File("square.ttf", ("TTF", ())),
+                        font_size: 50.,
+                        color: (0.9, 0.9, 0.9, 1.0),
+                        align: MiddleLeft,
+                        editable: (
+                            max_length: 4,
+                            selected_text_color: (0.1, 0.1, 0.1, 1.0),
+                            selected_background_color: (0.9, 0.9, 0.9, 1.0),
+                        ),
+                    )
+                ),
+                Label(
+                    transform: (
+                        id: "celsius_label",
+                        x: -57.,
+                        y: 0.,
+                        // stretch: XY( x_margin: 0., y_margin: 0., keep_aspect_ratio: false),
+                        width: 115.,
+                        height: 60.,
+                        tab_order: 1,
+                        anchor: MiddleRight,
+                        // opaque: false,
+                    ),
+                    text: (
+                        text: "celsius",
+                        font: File("square.ttf", ("TTF", ())),
+                        font_size: 16.,
+                        color: (0.9, 0.9, 0.9, 1.0),
+                    )
+                ),
+            ]
+        ),
+        
+    ],
+)
